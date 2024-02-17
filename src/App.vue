@@ -41,8 +41,8 @@ export default {
         .then((response) => {
           store.tvSeries = response.data.results.map((series) => {
             return {
-              title: series.title,
-              original_title: series.original_title,
+              name: series.name,
+              original_title: series.original_name,
               language: series.original_language,
               vote: series.vote_average
             }
@@ -52,7 +52,7 @@ export default {
 
     performSearch() {
       this.fetchMovies();
-      this.fetchTVSeries();
+      this.fetchTvSeries();
     },
 
     getFlag(langCode) {
@@ -72,11 +72,11 @@ export default {
   <div class="container mt-5 d-flex">
     <input type="text" class="form-control" v-model="searchedTerm" @keyup.enter="performSearch()">
     <button class="btn btn-primary ms-3" @click="performSearch()">Ricerca</button>
+    <hr>
   </div>
 
-  <hr>
-
-  <div class="mt-5">
+  <div class="mt-5 container">
+    <h2>Film</h2>
     <ul v-for="movie in store.movies">
       <li>Titolo: {{ movie.title }}</li>
       <li>Titolo Originale: {{ movie.original_title }}</li>
@@ -85,15 +85,16 @@ export default {
       </li>
       <li>Voto: {{ movie.vote }}</li>
     </ul>
-
-    <!-- <ul v-for="series in tvSeries.movies">
-      <li>Titolo: {{ series.title }}</li>
+    <hr>
+    <h2>Serie Tv</h2>
+    <ul v-for="series in store.tvSeries">
+      <li>Titolo: {{ series.name }}</li>
       <li>Titolo Originale: {{ series.original_title }}</li>
       <li>Lingua:
         <img :src="getFlag(series.language)" alt="">
       </li>
       <li>Voto: {{ series.vote }}</li>
-    </ul> -->
+    </ul>
 
   </div>
 </template>
