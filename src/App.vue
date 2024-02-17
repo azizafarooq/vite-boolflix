@@ -64,8 +64,10 @@ export default {
 </script>
 
 <template>
-  <AppHeader @search="performSearch"></AppHeader>
-  <AppMain></AppMain>
+  <div>
+    <AppHeader @search="performSearch"></AppHeader>
+    <AppMain></AppMain>
+  </div>
 </template>
 
 <style lang="scss">
