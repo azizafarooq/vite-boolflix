@@ -1,21 +1,21 @@
 <script >
 import axios from 'axios';
 import { store } from './store';
+import AppHeader from './components/AppHeader.vue';
 export default {
   data() {
     return {
       store,
-      searchedTerm: '',
     }
   },
 
   methods: {
-    fetchMovies() {
+    fetchMovies(searchedTerm) {
       axios
         .get(this.store.api.uri + 'search/movie', {
           params: {
             api_key: store.api.key,
-            query: this.searchedTerm,
+            query: searchedTerm,
           }
         })
         .then((response) => {
@@ -30,12 +30,12 @@ export default {
         })
     },
 
-    fetchTvSeries() {
+    fetchTvSeries(searchedTerm) {
       axios
         .get(this.store.api.uri + 'search/tv', {
           params: {
             api_key: store.api.key,
-            query: this.searchedTerm,
+            query: searchedTerm,
           }
         })
         .then((response) => {
@@ -50,9 +50,9 @@ export default {
         })
     },
 
-    performSearch() {
-      this.fetchMovies();
-      this.fetchTvSeries();
+    performSearch(searchedTerm) {
+      this.fetchMovies(searchedTerm);
+      this.fetchTvSeries(searchedTerm);
     },
 
     getFlag(langCode) {
@@ -64,16 +64,14 @@ export default {
         return '/images/united-kingdom.png'
       }
     }
-  }
+  },
+
+  components: { AppHeader }
 }
 </script>
 
 <template>
-  <div class="container mt-5 d-flex">
-    <input type="text" class="form-control" v-model="searchedTerm" @keyup.enter="performSearch()">
-    <button class="btn btn-primary ms-3" @click="performSearch()">Ricerca</button>
-    <hr>
-  </div>
+  <AppHeader @search="performSearch"></AppHeader>
 
   <div class="mt-5 container">
     <h2>Film</h2>
@@ -87,14 +85,14 @@ export default {
     </ul>
     <hr>
     <h2>Serie Tv</h2>
-    <ul v-for="series in store.tvSeries">
+    <!--<ul v-for="series in store.tvSeries">
       <li>Titolo: {{ series.name }}</li>
       <li>Titolo Originale: {{ series.original_title }}</li>
       <li>Lingua:
         <img :src="getFlag(series.language)" alt="">
       </li>
       <li>Voto: {{ series.vote }}</li>
-    </ul>
+    </ul>-->
 
   </div>
 </template>
