@@ -25,7 +25,8 @@ export default {
               title: movie.title,
               original_title: movie.original_title,
               language: movie.original_language,
-              vote: movie.vote_average
+              vote: Math.ceil(movie.vote_average / 2),
+              poster_path: movie.poster_path
             }
           });
         })
@@ -39,13 +40,14 @@ export default {
             query: searchedTerm,
           }
         })
-        .then((response) => {
-          store.tvSeries = response.data.results.map((series) => {
+        .then((res) => {
+          store.tvSeries = res.data.results.map((series) => {
             return {
               name: series.name,
               original_title: series.original_name,
               language: series.original_language,
-              vote: series.vote_average
+              vote: Math.ceil(series.vote_average / 2),
+              poster_path: movie.poster_path
             }
           });
         })
